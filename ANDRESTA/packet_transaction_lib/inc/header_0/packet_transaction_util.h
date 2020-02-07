@@ -15,22 +15,10 @@
 //proc 0
 #define P0_NUM_OF_INPS 1
 #define P0_NUM_OF_OUTS 1
-#define P0_INP0_NUM_OF_TOKEN 3 
+#define P0_INP0_NUM_OF_TOKEN 1 
 #define P0_INP0_TYPE int 
-#define P0_OUT0_NUM_OF_TOKEN 2 
+#define P0_OUT0_NUM_OF_TOKEN 1 
 #define P0_OUT0_TYPE int 
-
-//proc 1
-#define P1_NUM_OF_INPS 2
-#define P1_NUM_OF_OUTS 2
-#define P1_INP0_NUM_OF_TOKEN 2 
-#define P1_INP0_TYPE int 
-#define P1_INP1_NUM_OF_TOKEN 1 
-#define P1_INP1_TYPE int 
-#define P1_OUT0_NUM_OF_TOKEN 1 
-#define P1_OUT0_TYPE int 
-#define P1_OUT1_NUM_OF_TOKEN 1 
-#define P1_OUT1_TYPE int 
 
 
 
@@ -38,8 +26,6 @@
 
 /******************** BUFFER *********************/
 ring_buffer_t buff_p5_p0;
-ring_buffer_t buff_p0_p1;
-ring_buffer_t buff_p4_p1;
 /******************** BUFFER *********************/
 
 /******************* Structure *******************/

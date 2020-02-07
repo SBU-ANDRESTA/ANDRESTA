@@ -120,8 +120,6 @@ void serializing_send(struct Edge *edge, unsigned char *array){
 	else{
 		ring_buffer_queue_arr(edge->buffer,send_array,24);
 	}
-	//alt_printf("processor number %x sends data to %x ,which is %x\n",edge->proc_src,edge->proc_dest,( (int*)send_array )[0]);
-	test_arr[counter] = ( (int*)send_array )[0];
 }
 
 void send_data(struct Edge *edge, alt_u16 proc_num, uint8_t output_num){
@@ -159,11 +157,11 @@ void proc_args_init(){
 
 	// top level pointers to be passed for proc 0
 
-    proc_3_inp[0] = proc_3_inparg_0;
+    proc_3_inps[0] = proc_3_inparg_0;
 
-    proc_3_inp[1] = proc_3_inparg_1;
+    proc_3_inps[1] = proc_3_inparg_1;
 
-    proc_3_out[0] = proc_3_outarg_0;
+    proc_3_outs[0] = proc_3_outarg_0;
 
 
 
@@ -185,8 +183,8 @@ void start_FIFO(){
 	//alt_putstr("Hello from Nios II!\n");
 
 	//initialization of FIFOs
-	init_input_fifo_wrclk_control(FIFO_SINK_0_IN_CSR_BASE);
-	init_input_fifo_wrclk_control(FIFO_SOURCE_0_IN_CSR_BASE);
+	init_input_fifo_wrclk_control(FIFO_SINK_3_IN_CSR_BASE);
+	init_input_fifo_wrclk_control(FIFO_SOURCE_3_IN_CSR_BASE);
 
 	//alt_putstr("source status:\n");
 	//print_status(FIFO_SOURCE_0_IN_CSR_BASE);
@@ -204,7 +202,7 @@ int main()
 
 
 	//felan while true bokonam
-	while(true){
+	for(int i =0; i<5; i++){
 
 		for(int i = 0; i < P3_NUM_OF_INPS; i++){
 		struct Edge *edge = get_edge(3,i,0);
@@ -215,6 +213,8 @@ int main()
 		struct Edge *edge = get_edge(3,i,1);
 		send_data(edge,3,i);
 		}
+
+		printf("node number %d\n", 3);
 	}
 	cleanUp();
 

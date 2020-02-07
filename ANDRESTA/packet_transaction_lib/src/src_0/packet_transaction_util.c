@@ -8,13 +8,7 @@ struct Edge edge_p5_p0;
 
 struct Edge edge_p0_p1;
 
-struct Edge edge_p4_p1;
-
-struct Edge edge_p1_p2;
-
-struct Edge edge_p1_p3;
-
-struct Edge edges[5];
+struct Edge edges[2];
 /****************** Structure ******************/
 
 /* This is only for current node */
@@ -27,16 +21,6 @@ struct Edge* get_edge(uint8_t proc_num, uint8_t port_num, uint8_t inout)
             if (port_num == 0)
                 return &edge_p5_p0;
         }
-
-        if (proc_num == 1) {
-            if (port_num == 0)
-                return &edge_p0_p1;
-        }
-
-        if (proc_num == 1) {
-            if (port_num == 1)
-                return &edge_p4_p1;
-        }
     }
 
     if (inout == 1  /*it is output edge*/) {
@@ -46,16 +30,6 @@ struct Edge* get_edge(uint8_t proc_num, uint8_t port_num, uint8_t inout)
             if (port_num == 0)
                 return &edge_p0_p1;
         }
-
-        if (proc_num == 1) {
-            if (port_num == 0)
-                return &edge_p1_p2;
-        }
-
-        if (proc_num == 1) {
-            if (port_num == 1)
-                return &edge_p1_p3;
-        }
     }
 
     return 0;
@@ -64,7 +38,7 @@ struct Edge* get_edge(uint8_t proc_num, uint8_t port_num, uint8_t inout)
 /* This is only for current node */
 ring_buffer_t* get_buffer(alt_u16 proc_src, alt_u16 proc_dest)
 {
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 2; i++) {
         if (edges[i].proc_src == proc_src) {
             if (edges[i].proc_dest == proc_dest) {
                 return edges[i].buffer;
@@ -80,12 +54,6 @@ void init_buffer(){
 
 	ring_buffer_t buff_p5_p0;
 	ring_buffer_init(&buff_p5_p0);
-
-	ring_buffer_t buff_p0_p1;
-	ring_buffer_init(&buff_p0_p1);
-
-	ring_buffer_t buff_p4_p1;
-	ring_buffer_init(&buff_p4_p1);
 }
 
 /* This is only for current node */
@@ -106,46 +74,13 @@ void init_structures(){
 
 	//Edge p0 to p1
 	edge_p0_p1.node_src = 0;
-	edge_p0_p1.node_dest = 0;
+	edge_p0_p1.node_dest = 1;
 	edge_p0_p1.proc_src = 0;
 	edge_p0_p1.proc_dest = 1;
-	edge_p0_p1.num_of_inp_token = P1_INP0_NUM_OF_TOKEN;
 	edge_p0_p1.num_of_out_token = P0_OUT0_NUM_OF_TOKEN;
-	edge_p0_p1.size_of_token_type = sizeof(P1_INP0_TYPE);
-	edge_p0_p1.external = 0;
-	edge_p0_p1.buffer = &buff_p0_p1;
+	edge_p0_p1.size_of_token_type = sizeof(P0_OUT0_TYPE);
+	edge_p0_p1.external = 1;
 	edges[1] = edge_p0_p1;
-
-	//Edge p4 to p1
-	edge_p4_p1.node_src = 2;
-	edge_p4_p1.node_dest = 0;
-	edge_p4_p1.proc_src = 4;
-	edge_p4_p1.proc_dest = 1;
-	edge_p4_p1.num_of_inp_token = P1_INP1_NUM_OF_TOKEN;
-	edge_p4_p1.size_of_token_type = sizeof(P1_INP1_TYPE);
-	edge_p4_p1.external = 1;
-	edge_p4_p1.buffer = &buff_p4_p1;
-	edges[2] = edge_p4_p1;
-
-	//Edge p1 to p2
-	edge_p1_p2.node_src = 0;
-	edge_p1_p2.node_dest = 1;
-	edge_p1_p2.proc_src = 1;
-	edge_p1_p2.proc_dest = 2;
-	edge_p1_p2.num_of_out_token = P1_OUT0_NUM_OF_TOKEN;
-	edge_p1_p2.size_of_token_type = sizeof(P1_OUT0_TYPE);
-	edge_p1_p2.external = 1;
-	edges[3] = edge_p1_p2;
-
-	//Edge p1 to p3
-	edge_p1_p3.node_src = 0;
-	edge_p1_p3.node_dest = 3;
-	edge_p1_p3.proc_src = 1;
-	edge_p1_p3.proc_dest = 3;
-	edge_p1_p3.num_of_out_token = P1_OUT1_NUM_OF_TOKEN;
-	edge_p1_p3.size_of_token_type = sizeof(P1_OUT1_TYPE);
-	edge_p1_p3.external = 1;
-	edges[4] = edge_p1_p3;
 
 
 }

@@ -38,7 +38,7 @@
 		<tile number = "2">
 			<node_type number = "3">processor</node_type>
 			<node_name>NIOS II/f</node_name>
-			<memory_size>32000.0</memory_size>
+			<memory_size>32768.0</memory_size>
 			<fifo_in_depth>16</fifo_in_depth>
 			<fifo_out_depth>16</fifo_out_depth>
 		</tile>

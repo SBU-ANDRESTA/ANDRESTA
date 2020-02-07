@@ -72,7 +72,7 @@ void init_structures(){
 
 
 	//Edge p2 to p3
-	edge_p2_p3.node_src = 1;
+	edge_p2_p3.node_src = 2;
 	edge_p2_p3.node_dest = 3;
 	edge_p2_p3.proc_src = 2;
 	edge_p2_p3.proc_dest = 3;
@@ -83,7 +83,7 @@ void init_structures(){
 	edges[0] = edge_p2_p3;
 
 	//Edge p1 to p3
-	edge_p1_p3.node_src = 0;
+	edge_p1_p3.node_src = 1;
 	edge_p1_p3.node_dest = 3;
 	edge_p1_p3.proc_src = 1;
 	edge_p1_p3.proc_dest = 3;

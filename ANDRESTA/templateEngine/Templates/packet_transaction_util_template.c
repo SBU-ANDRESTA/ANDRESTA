@@ -1,18 +1,10 @@
-#include "packet_transaction_util.h"
-#include "packet_transaction.h"
-
 /* This is only for current node */
 /****************** Structure ******************/
+#for @edge in @edges:
+struct Edge edge_@{edge.name};
+#end
 
-struct Edge edge_p0_p1;
-
-struct Edge edge_p4_p1;
-
-struct Edge edge_p1_p2;
-
-struct Edge edge_p1_p3;
-
-struct Edge edges[4];
+struct Edge edges[@{num_of_edges}];
 /****************** Structure ******************/
 
 /* This is only for current node */
@@ -20,30 +12,22 @@ struct Edge* get_edge(uint8_t proc_num, uint8_t port_num, uint8_t inout)
 {
     if (inout == 0  /*it is input edge*/) {
 
-
-        if (proc_num == 1) {
-            if (port_num == 0)
-                return &edge_p0_p1;
+#for @edge in @input_edges:
+        if (proc_num == @{edge.proc_num}) {
+            if (port_num == @{edge.port_num})
+                return &edge_@{edge.name};
         }
-
-        if (proc_num == 1) {
-            if (port_num == 1)
-                return &edge_p4_p1;
-        }
+#end
     }
 
     if (inout == 1  /*it is output edge*/) {
 
-
-        if (proc_num == 1) {
-            if (port_num == 0)
-                return &edge_p1_p2;
+#for @edge in @output_edges:
+        if (proc_num == @{edge.proc_num}) {
+            if (port_num == @{edge.port_num})
+                return &edge_@{edge.name};
         }
-
-        if (proc_num == 1) {
-            if (port_num == 1)
-                return &edge_p1_p3;
-        }
+#end
     }
 
     return 0;
@@ -52,7 +36,7 @@ struct Edge* get_edge(uint8_t proc_num, uint8_t port_num, uint8_t inout)
 /* This is only for current node */
 ring_buffer_t* get_buffer(alt_u16 proc_src, alt_u16 proc_dest)
 {
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < @{num_of_edges}; i++) {
         if (edges[i].proc_src == proc_src) {
             if (edges[i].proc_dest == proc_dest) {
                 return edges[i].buffer;
@@ -65,60 +49,35 @@ ring_buffer_t* get_buffer(alt_u16 proc_src, alt_u16 proc_dest)
 /* This is only for current node */
 void init_buffer(){
 
-
-	ring_buffer_t buff_p0_p1;
-	ring_buffer_init(&buff_p0_p1);
-
-	ring_buffer_t buff_p4_p1;
-	ring_buffer_init(&buff_p4_p1);
+#for @buffer in @buffers:
+	ring_buffer_t buff_@{buffer.name};
+	ring_buffer_init(&buff_@{buffer.name});
+#end
 }
 
 /* This is only for current node */
 void init_structures(){
 	init_buffer();
 
-
-	//Edge p0 to p1
-	edge_p0_p1.node_src = 0;
-	edge_p0_p1.node_dest = 1;
-	edge_p0_p1.proc_src = 0;
-	edge_p0_p1.proc_dest = 1;
-	edge_p0_p1.num_of_inp_token = P1_INP0_NUM_OF_TOKEN;
-	edge_p0_p1.size_of_token_type = sizeof(P1_INP0_TYPE);
-	edge_p0_p1.external = 1;
-	edge_p0_p1.buffer = &buff_p0_p1;
-	edges[0] = edge_p0_p1;
-
-	//Edge p4 to p1
-	edge_p4_p1.node_src = 2;
-	edge_p4_p1.node_dest = 1;
-	edge_p4_p1.proc_src = 4;
-	edge_p4_p1.proc_dest = 1;
-	edge_p4_p1.num_of_inp_token = P1_INP1_NUM_OF_TOKEN;
-	edge_p4_p1.size_of_token_type = sizeof(P1_INP1_TYPE);
-	edge_p4_p1.external = 1;
-	edge_p4_p1.buffer = &buff_p4_p1;
-	edges[1] = edge_p4_p1;
-
-	//Edge p1 to p2
-	edge_p1_p2.node_src = 1;
-	edge_p1_p2.node_dest = 2;
-	edge_p1_p2.proc_src = 1;
-	edge_p1_p2.proc_dest = 2;
-	edge_p1_p2.num_of_out_token = P1_OUT0_NUM_OF_TOKEN;
-	edge_p1_p2.size_of_token_type = sizeof(P1_OUT0_TYPE);
-	edge_p1_p2.external = 1;
-	edges[2] = edge_p1_p2;
-
-	//Edge p1 to p3
-	edge_p1_p3.node_src = 1;
-	edge_p1_p3.node_dest = 3;
-	edge_p1_p3.proc_src = 1;
-	edge_p1_p3.proc_dest = 3;
-	edge_p1_p3.num_of_out_token = P1_OUT1_NUM_OF_TOKEN;
-	edge_p1_p3.size_of_token_type = sizeof(P1_OUT1_TYPE);
-	edge_p1_p3.external = 1;
-	edges[3] = edge_p1_p3;
+#for @edge in @edges2:
+	//Edge p@{edge.proc_src} to p@{edge.proc_dest}
+	edge_@{edge.name}.node_src = @{edge.node_src};
+	edge_@{edge.name}.node_dest = @{edge.node_dest};
+	edge_@{edge.name}.proc_src = @{edge.proc_src};
+	edge_@{edge.name}.proc_dest = @{edge.proc_dest};
+#if (@edge.num_of_inp_token)
+	edge_@{edge.name}.num_of_inp_token = @{edge.num_of_inp_token};
+#end
+#if (@edge.num_of_out_token)
+	edge_@{edge.name}.num_of_out_token = @{edge.num_of_out_token};
+#end
+	edge_@{edge.name}.size_of_token_type = sizeof(@{edge.size_of_token_type});
+	edge_@{edge.name}.external = @{edge.external};
+#if (@edge.buffer)
+	edge_@{edge.name}.buffer = &buff_@{edge.buffer};
+#end
+	edges[@{edge.counter}] = edge_@{edge.name};
+#end
 
 
 }

@@ -12,20 +12,25 @@
 #define FIFO_STATUS		ALTERA_AVALON_FIFO_STATUS_ALL
 
 
-//proc 2
-#define P2_NUM_OF_INPS 1
-#define P2_NUM_OF_OUTS 1
-#define P2_INP0_NUM_OF_TOKEN 1 
-#define P2_INP0_TYPE int 
-#define P2_OUT0_NUM_OF_TOKEN 1 
-#define P2_OUT0_TYPE int 
+//proc 1
+#define P1_NUM_OF_INPS 2
+#define P1_NUM_OF_OUTS 2
+#define P1_INP0_NUM_OF_TOKEN 1 
+#define P1_INP0_TYPE int 
+#define P1_INP1_NUM_OF_TOKEN 1 
+#define P1_INP1_TYPE int 
+#define P1_OUT0_NUM_OF_TOKEN 1 
+#define P1_OUT0_TYPE int 
+#define P1_OUT1_NUM_OF_TOKEN 1 
+#define P1_OUT1_TYPE int 
 
 
 
 #define BUFFER_SIZE 50
 
 /******************** BUFFER *********************/
-ring_buffer_t buff_p1_p2;
+ring_buffer_t buff_p0_p1;
+ring_buffer_t buff_p4_p1;
 /******************** BUFFER *********************/
 
 /******************* Structure *******************/

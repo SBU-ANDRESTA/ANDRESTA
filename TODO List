@@ -1,0 +1,11 @@
+- Separate the instruction memory and data memory 
+- Use Interrupt service to communicate with FIFOs
+- Support all version of NIOS II (fast/economy)
+- Add the packet_transaction library as a driver to the NoC IP
+- Use the subsystem in the qsys
+- Add reset button to the system
+- Support variable packet size for sending and receiving the packet
+- Change the packet_transaction library in a way that it becomes appropriate for large size packets
+- Make the packet_transaction library efficient (Now, it sends and receives 32 bytes for each token)
+- fix the problem of "makefile" in the NIOS project (ask Dr. Attarzadeh)
+- A virtual machine for running the tool

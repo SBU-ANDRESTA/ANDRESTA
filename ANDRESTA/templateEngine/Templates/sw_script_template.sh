@@ -37,7 +37,7 @@ rm obj/default/hello_world_small.o
 cp ../../../sw_sources/@{sw.nodeName}.c @{sw.nodeName}.c
 cp ../../../packet_transaction_lib/inc/header_@{sw.index}/packet_transaction_util.h packet_transaction_util.h
 cp ../../../packet_transaction_lib/inc/header_@{sw.index}/makefile makefile
-cp ../../../templateEngine/applicationEngine/Templates/packet_transaction.h packet_transaction.h
+cp ../../../packet_transaction_lib/inc/packet_transaction.h packet_transaction.h
 cp ../../../packet_transaction_lib/src/src_@{sw.index}/packet_transaction_util.c packet_transaction_util.c
 cp ../../../packet_transaction_lib/buffer/* .
 
